@@ -1,0 +1,12 @@
+package br.coop.integrada.arquivomorto.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping(value = "/arquivos")
+public class ArquivoController {
+	public String listar() {
+		return "All Files";
+	}
+}

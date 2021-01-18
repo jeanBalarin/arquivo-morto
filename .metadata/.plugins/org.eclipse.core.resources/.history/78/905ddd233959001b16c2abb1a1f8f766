@@ -1,0 +1,5 @@
+package br.coop.integrada.arquivomorto.model;
+
+public enum caixaStatus {
+
+}
