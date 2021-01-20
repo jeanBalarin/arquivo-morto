@@ -1,0 +1,39 @@
+package br.coop.integrada.arquivomorto.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.coop.integrada.arquivomorto.model.Arquivo;
+import br.coop.integrada.arquivomorto.repositories.ArquivoRepository;
+
+@Service
+public class ArquivoService {
+	
+	@Autowired
+	private ArquivoRepository arquivoRep;
+	
+	//lista todos os arquivos 
+	
+	
+	@Transactional(readOnly = true)
+	public List<Arquivo> findAll(){
+		List<Arquivo> arquivos = arquivoRep.findAll();
+		return arquivos;
+	}
+	
+	@Transactional(readOnly = true)
+	public Optional<Arquivo> findById(Long id) {
+		Optional<Arquivo> arquivo = arquivoRep.findById(id);
+		return arquivo;
+	}
+	
+ 	@Transactional
+	public Arquivo insert(Arquivo novo) {	
+		return arquivoRep.save(novo);
+ 	}
+
+}

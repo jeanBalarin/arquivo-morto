@@ -1,0 +1,5 @@
+package br.coop.integrada.arquivomorto.repositories;
+
+public class ArquivoRepository {
+
+}
