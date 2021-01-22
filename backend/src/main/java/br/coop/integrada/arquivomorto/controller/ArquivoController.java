@@ -53,17 +53,17 @@ public class ArquivoController {
 		arq = service.insert(arq);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(arq.getId()).toUri();
+				.buildAndExpand(arq.getIdArquivo()).toUri();
 		
 		return ResponseEntity.created(uri).body(arq);
 	}
 	
 	@PutMapping
 	public ResponseEntity<Arquivo> update(@RequestBody Arquivo arq){
-		Optional<Arquivo> arquivo = service.findById(arq.getId());
+		Optional<Arquivo> arquivo = service.findById(arq.getIdArquivo());
 		if(arquivo.isPresent()) {
 			arq = service.insert(arq);
-			return ResponseEntity.ok().body(arquivo.get());
+			return ResponseEntity.ok().body(arq);
 		}
 		else {
 			return ResponseEntity.notFound().build();
@@ -77,7 +77,7 @@ public class ArquivoController {
 		if(arquivo.isPresent()) {
 			service.delete(arquivo.get());
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(arquivo.get().getId()).toUri();
+					.buildAndExpand(arquivo.get().getIdArquivo()).toUri();
 			return ResponseEntity.created(uri).body(arquivo.get());
 		}
 		else {

@@ -3,41 +3,45 @@ package br.coop.integrada.arquivomorto.model;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+
 
 @Entity
 public class Arquivo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_arquivo")
+	private Long idArquivo;
     private String descricao;
+    @Column(name = "data_arquivo")
     private Date dataArquivo;
-
+    
+    @ManyToOne
+    private Caixa caixa;
+    
     public Arquivo() {};
     
-    public Arquivo(Arquivo entity) {
-    	id = entity.getId();
-    	descricao = entity.getDescricao();
-    	dataArquivo = entity.getDataArquivo();
-    }
-    
-    public Arquivo(Long id, String descricao, Date dataArquivo) {
-		this.id = id;
+    public Arquivo(Long idArquivo, String descricao, Date dataArquivo, Caixa caixa) {
+		this.idArquivo = idArquivo;
 		this.descricao = descricao;
 		this.dataArquivo = dataArquivo;
+		this.caixa = caixa;
 	}
 
-	public Long getId() {
-        return this.id;
+	public Long getIdArquivo() {
+        return this.idArquivo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdArquivo(Long idArquivo) {
+        this.idArquivo = idArquivo;
     }
 
     public String getDescricao() {
@@ -55,12 +59,20 @@ public class Arquivo implements Serializable {
     public void setDataArquivo(Date dataArquivo) {
         this.dataArquivo = dataArquivo;
     }
+    
+    public Long getIdCaixa() {
+    	return caixa.getIdCaixa();
+    }
+    
+    public void setCaixa(Caixa caixa) {
+    	this.caixa = caixa;
+    }
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idArquivo == null) ? 0 : idArquivo.hashCode());
 		return result;
 	}
 
@@ -73,10 +85,10 @@ public class Arquivo implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Arquivo other = (Arquivo) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idArquivo == null) {
+			if (other.idArquivo != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idArquivo.equals(other.idArquivo))
 			return false;
 		return true;
 	}        

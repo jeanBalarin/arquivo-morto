@@ -1,11 +1,16 @@
 package br.coop.integrada.arquivomorto.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Setor implements Serializable {
@@ -13,30 +18,33 @@ public class Setor implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name="id_setor")
+	private Long idSetor;
 	private String nome;
 	private String sigla;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "setor")
+	private List<Caixa> caixas = new ArrayList<>();
 	
 	public Setor() {};
 	
 	public Setor (Setor entity) {
-		id = entity.getId();
+		idSetor = entity.getIdSetor();
 		nome = entity.getNome();
 		sigla = entity.getSigla();
 	}	
 	
-	public Setor(Long id, String nome, String sigla) {
-		super();
-		this.id = id;
+	public Setor(Long idSetor, String nome, String sigla) {
+		this.idSetor = idSetor;
 		this.nome = nome;
 		this.sigla = sigla;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getIdSetor() {
+		return idSetor;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdSetor(Long idSetor) {
+		this.idSetor = idSetor;
 	}
 	public String getNome() {
 		return nome;
@@ -50,11 +58,20 @@ public class Setor implements Serializable {
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
+	
+	public List<Caixa> getCaixas() {
+		return caixas;
+	}
+
+	public void setCaixas(List<Caixa> caixas) {
+		this.caixas = caixas;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idSetor == null) ? 0 : idSetor.hashCode());
 		return result;
 	}
 	@Override
@@ -66,10 +83,10 @@ public class Setor implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Setor other = (Setor) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idSetor == null) {
+			if (other.idSetor != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idSetor.equals(other.idSetor))
 			return false;
 		return true;
 	}

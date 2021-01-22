@@ -1,0 +1,86 @@
+package br.coop.integrada.arquivomorto.controller;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import br.coop.integrada.arquivomorto.model.Setor;
+import br.coop.integrada.arquivomorto.services.SetorService;
+
+@RestController
+@RequestMapping(value = "/setores")
+public class SetorController {
+	
+	@Autowired
+	private SetorService service;
+	
+	
+	@GetMapping
+	public ResponseEntity<List<Setor>> findAll(){
+		List<Setor> lista = service.findAll();
+		return ResponseEntity.ok().body(lista);
+	}
+	
+	@GetMapping("/{id}/list-id")
+	public ResponseEntity<Setor> findAllId(@PathVariable Long id){
+		Optional<Setor> setor = service.findById(id);
+		
+		if(setor.isPresent()) {
+			return ResponseEntity.ok().body(setor.get());
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
+	
+	
+	
+	@PostMapping
+	public ResponseEntity<Setor> insert(@RequestBody Setor setor){
+		setor = service.insert(setor);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(setor.getIdSetor()).toUri();
+		
+		return ResponseEntity.created(uri).body(setor);
+	}
+	
+	@PutMapping
+	public ResponseEntity<Setor> update(@RequestBody Setor setor){
+		Optional<Setor> st = service.findById(setor.getIdSetor());
+		if(st.isPresent()) {
+			setor = service.insert(setor);
+			return ResponseEntity.ok().body(setor);
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}	
+	}
+	
+	
+	@DeleteMapping("/{id}/delete-id")
+	public ResponseEntity<Setor> delete(@PathVariable Long id){
+		Optional<Setor> setor = service.findById(id);
+		if(setor.isPresent()) {
+			service.delete(setor.get());
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(setor.get().getIdSetor()).toUri();
+			return ResponseEntity.created(uri).body(setor.get());
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}	
+	}
+}

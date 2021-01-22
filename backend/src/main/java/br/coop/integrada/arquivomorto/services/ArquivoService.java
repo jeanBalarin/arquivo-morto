@@ -32,7 +32,7 @@ public class ArquivoService {
 	}
 	
  	@Transactional
-	public Arquivo insert(Arquivo novo) {	
+	public Arquivo insert(Arquivo novo) {
 		return arquivoRep.save(novo);
  	}
  	

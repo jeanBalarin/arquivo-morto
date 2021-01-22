@@ -2,11 +2,16 @@ package br.coop.integrada.arquivomorto.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Caixa implements Serializable {
@@ -15,44 +20,48 @@ public class Caixa implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name="id_caixa")
+	private Long idCaixa;
 	private String numero;
 	private Date prescricao;
 	private CaixaStatus situacao;
+	
+	@ManyToOne
+	private Setor setor;
+	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "caixa")
+	private List<Arquivo> arquivos;
+	
 	public Caixa() {};
 	
-	public Caixa(Caixa entity) {
-		id = entity.getId();
-		numero = entity.getNumero();
-		prescricao = entity.getPrescricao();
-		situacao = entity.getSituacao();
-	}
-	
-	
-	
-	
-	public Caixa(Long id, String numero, Date prescricao, CaixaStatus situacao) {
-		this.id = id;
+	public Caixa(Long idCaixa, String numero, Date prescricao, CaixaStatus situacao, Setor setor) {
+		this.idCaixa = idCaixa;
 		this.numero = numero;
 		this.prescricao = prescricao;
 		this.situacao = situacao;
+		this.setor = setor;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getIdCaixa() {
+		return idCaixa;
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setIdCaixa(Long idCaixa) {
+		this.idCaixa = idCaixa;
 	}
+
 	public String getNumero() {
 		return numero;
 	}
+
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
+
 	public Date getPrescricao() {
 		return prescricao;
 	}
+
 	public void setPrescricao(Date prescricao) {
 		this.prescricao = prescricao;
 	}
@@ -65,11 +74,27 @@ public class Caixa implements Serializable {
 		this.situacao = situacao;
 	}
 
+	public Long getIDSetor() {
+		return setor.getIdSetor();
+	}
+
+	public void setSetor(Setor setor) {
+		this.setor = setor;
+	}
+
+	public List<Arquivo> getArquivos() {
+		return arquivos;
+	}
+
+	public void setArquivos(List<Arquivo> arquivos) {
+		this.arquivos = arquivos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idCaixa == null) ? 0 : idCaixa.hashCode());
 		return result;
 	}
 
@@ -82,10 +107,10 @@ public class Caixa implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Caixa other = (Caixa) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idCaixa == null) {
+			if (other.idCaixa != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idCaixa.equals(other.idCaixa))
 			return false;
 		return true;
 	}
