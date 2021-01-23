@@ -29,7 +29,7 @@ public class Arquivo implements Serializable {
     
     public Arquivo() {};
     
-    public Arquivo(Long idArquivo, String descricao, Date dataArquivo, Caixa caixa) {
+    public Arquivo(Long idArquivo, String descricao, Date dataArquivo,Caixa caixa) {
 		this.idArquivo = idArquivo;
 		this.descricao = descricao;
 		this.dataArquivo = dataArquivo;

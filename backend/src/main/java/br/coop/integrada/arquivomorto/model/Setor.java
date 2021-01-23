@@ -1,16 +1,13 @@
 package br.coop.integrada.arquivomorto.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
 
 @Entity
 public class Setor implements Serializable {
@@ -22,9 +19,6 @@ public class Setor implements Serializable {
 	private Long idSetor;
 	private String nome;
 	private String sigla;
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "setor")
-	private List<Caixa> caixas = new ArrayList<>();
 	
 	public Setor() {};
 	
@@ -57,14 +51,6 @@ public class Setor implements Serializable {
 	}
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
-	}
-	
-	public List<Caixa> getCaixas() {
-		return caixas;
-	}
-
-	public void setCaixas(List<Caixa> caixas) {
-		this.caixas = caixas;
 	}
 	
 	@Override

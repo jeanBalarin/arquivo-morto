@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -26,7 +27,8 @@ public class Caixa implements Serializable {
 	private Date prescricao;
 	private CaixaStatus situacao;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="id_setor")
 	private Setor setor;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "caixa")
@@ -40,6 +42,10 @@ public class Caixa implements Serializable {
 		this.prescricao = prescricao;
 		this.situacao = situacao;
 		this.setor = setor;
+	}
+	
+	public Caixa(Long id) {
+		this.idCaixa = id;
 	}
 
 	public Long getIdCaixa() {

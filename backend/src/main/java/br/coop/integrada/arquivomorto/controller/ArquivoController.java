@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.coop.integrada.arquivomorto.model.Caixa;
 import br.coop.integrada.arquivomorto.model.Arquivo;
 import br.coop.integrada.arquivomorto.services.ArquivoService;
+import br.coop.integrada.arquivomorto.services.CaixaService;
+
 
 @RestController
 @RequestMapping(value = "/arquivos")
@@ -26,7 +31,9 @@ public class ArquivoController {
 	
 	@Autowired
 	private ArquivoService service;
-	
+	@Autowired
+	private CaixaService serviceCaixa;
+
 	
 	@GetMapping
 	public ResponseEntity<List<Arquivo>> findAll(){
@@ -50,19 +57,24 @@ public class ArquivoController {
 	
 	@PostMapping
 	public ResponseEntity<Arquivo> insert(@RequestBody Arquivo arq){
-		arq = service.insert(arq);
-		
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(arq.getIdArquivo()).toUri();
-		
-		return ResponseEntity.created(uri).body(arq);
+		Optional<Caixa> caixa = serviceCaixa.findById(arq.getIdCaixa());
+		if(caixa.isPresent()) {
+			arq = service.insert(arq);
+			
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(arq.getIdArquivo()).toUri();	
+			return ResponseEntity.created(uri).body(arq);
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	@PutMapping
 	public ResponseEntity<Arquivo> update(@RequestBody Arquivo arq){
 		Optional<Arquivo> arquivo = service.findById(arq.getIdArquivo());
 		if(arquivo.isPresent()) {
-			arq = service.insert(arq);
+			arq = service.update(arq);
 			return ResponseEntity.ok().body(arq);
 		}
 		else {

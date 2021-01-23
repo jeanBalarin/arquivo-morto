@@ -8,13 +8,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.coop.integrada.arquivomorto.model.Arquivo;
+import br.coop.integrada.arquivomorto.model.Caixa;
 import br.coop.integrada.arquivomorto.repositories.ArquivoRepository;
+import br.coop.integrada.arquivomorto.repositories.CaixaRepository;
 
 @Service
 public class ArquivoService {
 	
 	@Autowired
 	private ArquivoRepository arquivoRep;
+	
+	@Autowired
+	private CaixaRepository caixaRep;
 	
 	//lista todos os arquivos 
 	
@@ -33,7 +38,17 @@ public class ArquivoService {
 	
  	@Transactional
 	public Arquivo insert(Arquivo novo) {
-		return arquivoRep.save(novo);
+ 		Caixa caixa = caixaRep.getOne(novo.getIdCaixa());
+ 		
+ 		Arquivo arquivo = new Arquivo(null,novo.getDescricao(),novo.getDataArquivo(),caixa);
+ 		
+		return arquivoRep.save(arquivo);
+ 	}
+ 	
+ 	@Transactional
+ 	public Arquivo update(Arquivo alterar) {
+ 		
+ 		return arquivoRep.save(alterar);
  	}
  	
  	@Transactional

@@ -28,7 +28,7 @@ public class SetorController {
 	
 	
 	@GetMapping
-	public ResponseEntity<List<Setor>> findSetores(){
+	public ResponseEntity<List<Setor>> findAll(){
 		List<Setor> lista = service.findAll();
 		return ResponseEntity.ok().body(lista);
 	}
@@ -43,8 +43,6 @@ public class SetorController {
 		
 		return ResponseEntity.notFound().build();
 	}
-	
-	
 	
 	
 	@PostMapping
