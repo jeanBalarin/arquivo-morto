@@ -54,6 +54,13 @@ public class ArquivoService {
  	@Transactional
  	public void delete(Arquivo arquivo) {
  		 arquivoRep.delete(arquivo);
- 	}
-
+	}
+	
+	@Transactional
+	public void delete (List<Arquivo> arquivos){
+		for(Arquivo a : arquivos){
+			delete(a);
+		}
+	}
+	
 }

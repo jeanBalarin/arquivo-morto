@@ -80,7 +80,7 @@ public class Caixa implements Serializable {
 		this.situacao = situacao;
 	}
 
-	public Long getIDSetor() {
+	public Long getIdSetor() {
 		return setor.getIdSetor();
 	}
 
