@@ -37,8 +37,15 @@ public class CaixaService {
  	}
  	
  	@Transactional
- 	public void delete(Caixa arquivo) {
- 		 caixaRep.delete(arquivo);
+ 	public Caixa update(Caixa update) {
+ 		//Caixa caixa = caixaRep.getOne(update.getIdCaixa());
+ 		//update.setArquivos(caixa.getArquivos());
+ 		return caixaRep.save(update);
+ 	}
+ 	
+ 	@Transactional
+ 	public void delete(Caixa caixa) {
+ 		 caixaRep.delete(caixa);
  	}
 
 }
