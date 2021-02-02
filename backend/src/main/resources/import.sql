@@ -9,3 +9,5 @@ insert into arquivo (id_arquivo, data_arquivo, descricao, caixa_id_caixa) values
 insert into arquivo (id_arquivo, data_arquivo, descricao, caixa_id_caixa) values (3, '2021-03-21', 'teste 03', 1);
 insert into arquivo (id_arquivo, data_arquivo, descricao, caixa_id_caixa) values (4, '2021-04-21', 'teste 04', 2);
 insert into arquivo (id_arquivo, data_arquivo, descricao, caixa_id_caixa) values (5, '2021-05-21', 'teste 05', 1);
+
+insert into local (id_local, descricao, nome) values (1, 'ao lado do estacionamento', 'escada amarela');

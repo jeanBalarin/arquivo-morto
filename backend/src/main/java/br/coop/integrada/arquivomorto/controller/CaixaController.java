@@ -18,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.coop.integrada.arquivomorto.model.Arquivo;
 import br.coop.integrada.arquivomorto.model.Caixa;
-import br.coop.integrada.arquivomorto.model.Setor;
+import br.coop.integrada.arquivomorto.model.Local;
 import br.coop.integrada.arquivomorto.services.ArquivoService;
 import br.coop.integrada.arquivomorto.services.CaixaService;
-import br.coop.integrada.arquivomorto.services.SetorService;
+import br.coop.integrada.arquivomorto.services.LocalService;
 
 @RestController
 @RequestMapping(value = "/caixas")
@@ -32,7 +31,7 @@ public class CaixaController {
 	@Autowired
 	private CaixaService service;
 	@Autowired
-	private SetorService serviceCaixa;
+	private LocalService serviceCaixa;
 	@Autowired
 	private ArquivoService serviceArquivo;
 	
@@ -55,7 +54,7 @@ public class CaixaController {
 	
 	@PostMapping
 	public ResponseEntity<Caixa> insert(@RequestBody Caixa caixa){
-		Optional <Setor> setor = serviceCaixa.findById(caixa.getIdSetor());
+		Optional <Local> setor = serviceCaixa.findById(caixa.getIdSetor());
 			
 		if(setor.isPresent()) {
 			caixa = service.insert(caixa);
