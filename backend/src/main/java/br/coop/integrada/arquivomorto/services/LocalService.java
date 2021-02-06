@@ -18,14 +18,14 @@ public class LocalService {
 		
 	@Transactional(readOnly = true)
 	public List<Local> findAll(){
-		List<Local> setores = localRep.findAll();
-		return setores;
+		List<Local> locais = localRep.findAll();
+		return locais;
 	}
 	
 	@Transactional(readOnly = true)
 	public Optional<Local> findById(Long id) {
-		Optional<Local> setor = localRep.findById(id);
-		return setor;
+		Optional<Local> local = localRep.findById(id);
+		return local;
 	}
 	
  	@Transactional
@@ -34,8 +34,8 @@ public class LocalService {
  	}
  	
  	@Transactional
- 	public void delete(Local setor) {
- 		 localRep.delete(setor);
+ 	public void delete(Local local) {
+ 		 localRep.delete (local);
  	}
  	
  	

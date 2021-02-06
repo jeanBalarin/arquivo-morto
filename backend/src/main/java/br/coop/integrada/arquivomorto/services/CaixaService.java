@@ -16,19 +16,26 @@ public class CaixaService {
 	@Autowired
 	private CaixaRepository caixaRep;
 
-	//lista todos os arquivos 
+	//lista todos os caixas 
 	
 	
 	@Transactional(readOnly = true)
 	public List<Caixa> findAll(){
-		List<Caixa> arquivos = caixaRep.findAll();
-		return arquivos;
+		List<Caixa> caixas = caixaRep.findAll();
+		return caixas;
 	}
 	
 	@Transactional(readOnly = true)
 	public Optional<Caixa> findById(Long id) {
 		Optional<Caixa> caixa = caixaRep.findById(id);
 		return caixa;
+	}
+
+	//retorna uma caixa com o id informado.
+	@Transactional(readOnly = true)
+	public Caixa findByCaixaId(Long id){
+		Optional<Caixa> caixa = caixaRep.findById(id);
+		return (caixa.isPresent()) ?  caixa.get() :  null;
 	}
 	
  	@Transactional

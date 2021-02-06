@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.coop.integrada.arquivomorto.model.Caixa;
-import br.coop.integrada.arquivomorto.model.Local;
+import br.coop.integrada.arquivomorto.model.Setor;
 import br.coop.integrada.arquivomorto.services.ArquivoService;
 import br.coop.integrada.arquivomorto.services.CaixaService;
-import br.coop.integrada.arquivomorto.services.LocalService;
+import br.coop.integrada.arquivomorto.services.SetorService;
 
 @RestController
 @RequestMapping(value = "/caixas")
@@ -31,7 +31,7 @@ public class CaixaController {
 	@Autowired
 	private CaixaService service;
 	@Autowired
-	private LocalService serviceCaixa;
+	private SetorService serviceSetor;
 	@Autowired
 	private ArquivoService serviceArquivo;
 	
@@ -54,7 +54,7 @@ public class CaixaController {
 	
 	@PostMapping
 	public ResponseEntity<Caixa> insert(@RequestBody Caixa caixa){
-		Optional <Local> setor = serviceCaixa.findById(caixa.getIdSetor());
+		Optional <Setor> setor = serviceSetor.findById(caixa.getIdSetor());
 			
 		if(setor.isPresent()) {
 			caixa = service.insert(caixa);
@@ -74,8 +74,9 @@ public class CaixaController {
 	public ResponseEntity<Caixa> update(@RequestBody Caixa caixa){
 		
 		Optional<Caixa> cx = service.findById(caixa.getIdCaixa());
+		Optional <Setor> setor = serviceSetor.findById(caixa.getIdSetor());
 		
-		if(cx.isPresent()) {
+		if(cx.isPresent() && setor.isPresent()) {
 			caixa = service.update(caixa);
 			return ResponseEntity.ok().body(caixa);
 		}
@@ -91,10 +92,16 @@ public class CaixaController {
 			Caixa caixa = cx.get();
 			if(caixa.getArquivos()!= null){
 				serviceArquivo.delete(caixa.getArquivos());
+				caixa = service.findByCaixaId(id);
 			}
+
 			service.delete(caixa);
+			return ResponseEntity.ok().body(caixa);
+
 		}
-		return null;
+		else{
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 }

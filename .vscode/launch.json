@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ArquivoMortoApplication<ArquivoMorto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "br.coop.integrada.arquivomorto.ArquivoMortoApplication",
+            "projectName": "ArquivoMorto",
+            "args": ""
+        }
+    ]
+}
