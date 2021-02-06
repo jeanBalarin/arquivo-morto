@@ -16,9 +16,6 @@ public class SetorService {
 	@Autowired
 	private SetorRepository setorRep;
 	
-	//lista todos os arquivos 
-	
-	
 	@Transactional(readOnly = true)
 	public List<Setor> findAll(){
 		List<Setor> setores = setorRep.findAll();
