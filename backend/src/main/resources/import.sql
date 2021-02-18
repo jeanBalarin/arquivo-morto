@@ -11,3 +11,7 @@ insert into arquivo (id_arquivo, data_arquivo, descricao, caixa_id_caixa) values
 insert into arquivo (id_arquivo, data_arquivo, descricao, caixa_id_caixa) values (5, '2021-05-21', 'teste 05', 1);
 
 insert into local (id_local, descricao, nome) values (1, 'ao lado do estacionamento', 'escada amarela');
+
+insert into prateleira (id_prateleira, nome, id_local) values (1,'A', 1);
+
+insert into reparticao (id_reparticao, quantidade_vagas, prateleira_id_prateleira) values (1, 15, 1);

@@ -1,13 +1,16 @@
 package br.coop.integrada.arquivomorto.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Reparticao implements Serializable {
@@ -21,6 +24,9 @@ public class Reparticao implements Serializable {
 
     @ManyToOne
     private Prateleira prateleira;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "reparticao")
+    private List<Vaga> vagas;
 
     public Reparticao() {}
 
@@ -52,6 +58,14 @@ public class Reparticao implements Serializable {
 
     public void setPrateleira(Prateleira prateleira) {
         this.prateleira = prateleira;
+    }
+
+    public List<Vaga> getVagas() {
+        return vagas;
+    }
+
+    public void setVagas(List<Vaga> vagas) {
+        this.vagas = vagas;
     }
 
     @Override
