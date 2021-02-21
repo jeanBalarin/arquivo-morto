@@ -51,7 +51,7 @@ public class PrateleiraController {
         Optional<Local> local = localService.findById(prateleira.getIdLocal());
         
         if(local.isPresent()){
-            prateleira = service.insert(prateleira);
+            prateleira = service.criarPrateleira(prateleira);
             return ResponseEntity.ok().body(prateleira);
         }
         else{

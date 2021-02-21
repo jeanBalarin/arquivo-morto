@@ -16,6 +16,9 @@ public class PrateleiraService {
     @Autowired
     private PrateleiraRepository prateleiraRep;
 
+    @Autowired
+    private ReparticaoService reparticaoService;
+
     @Transactional(readOnly = true)
     public List<Prateleira> findAll(){
         List<Prateleira> prateleiras = prateleiraRep.findAll();
@@ -35,6 +38,16 @@ public class PrateleiraService {
     @Transactional
     public void delete(Prateleira prateleira){
         prateleiraRep.delete(prateleira);
+    }
+
+    public Prateleira criarPrateleira(Prateleira prateleira){
+        prateleira = insert(prateleira);
+        int rep = prateleira.getQuantidadeReparticoes();
+        for (int i = 1; i <= rep; i++){
+            reparticaoService.criarReparticao(prateleira, i);
+        }
+                
+        return findById(prateleira.getIdPrateleira()).get();
     }
     
 }

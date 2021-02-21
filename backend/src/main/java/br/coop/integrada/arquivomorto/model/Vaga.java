@@ -2,11 +2,12 @@ package br.coop.integrada.arquivomorto.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Vaga implements Serializable{
@@ -14,37 +15,27 @@ public class Vaga implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id_vaga")
     private Long idVaga;
-    private int nivel;
     private VagaStatus situacaoVaga;
-    
-    @ManyToMany
-    private Reparticao reparticao;
-
-
-    // identificação da vaga é comporta por
-    // nivel + nivel * 10 + id do vetor da posição da vaga.
-    // ex nivel= 2 + (posição do vetor[15]) = 215
-    // px nivel= 3 + (posição do vetor[15]) = 315 
-    // primeiro digito sempre vai representar o nivel da repartição.
     private String numeracaoVaga;
-
+    @ManyToOne
+    private Reparticao reparticao; 
+    
     public Vaga (){}
 
-    public Vaga(Long idVaga, int nivel, Reparticao reparticao, VagaStatus situacaoVaga, String numeracaoVaga) {
+    public Vaga(Long idVaga, Reparticao reparticao, VagaStatus situacaoVaga, String numeracaoVaga) {
         this.idVaga = idVaga;
-        this.nivel = nivel;
         this.reparticao = reparticao;
         this.situacaoVaga = situacaoVaga;
         this.numeracaoVaga = numeracaoVaga;
     }
 
-    public Vaga(Long idVaga, int nivel, Reparticao reparticao, VagaStatus situacaoVaga, int posicao) {
-        this.idVaga = idVaga;
-        this.nivel = nivel;
+    //construtor utilizado no criar vagas no reparticaoService para criar vagas automaticamente.
+    public Vaga(Reparticao reparticao, int posicao) {
         this.reparticao = reparticao;
-        this.situacaoVaga = situacaoVaga;
-        this.numeracaoVaga = ""+this.nivel + posicao;
+        this.situacaoVaga = VagaStatus.LIVRE;
+        this.numeracaoVaga = "" + reparticao.getNivel() + posicao;
     }
 
     public Long getIdVaga() {
@@ -53,14 +44,6 @@ public class Vaga implements Serializable{
 
     public void setIdVaga(Long idVaga) {
         this.idVaga = idVaga;
-    }
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
     }
 
     public Long getIdReparticao() {

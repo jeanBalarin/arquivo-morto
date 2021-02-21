@@ -18,6 +18,7 @@ import br.coop.integrada.arquivomorto.model.Prateleira;
 import br.coop.integrada.arquivomorto.model.Reparticao;
 import br.coop.integrada.arquivomorto.services.PrateleiraService;
 import br.coop.integrada.arquivomorto.services.ReparticaoService;
+import br.coop.integrada.arquivomorto.services.VagaService;
 
 @RestController
 @RequestMapping(value = "/reparticoes")
@@ -27,6 +28,8 @@ public class ReparticaoController {
     private ReparticaoService service;
     @Autowired
     private PrateleiraService prateleiraService;
+    @Autowired
+    private VagaService vagaService;
 
     @GetMapping
     public ResponseEntity<List<Reparticao>> findAll(){
@@ -78,6 +81,11 @@ public class ReparticaoController {
 
         if(repar.isPresent()){
             Reparticao reparticao = repar.get();
+            if(reparticao.getVagas()!= null){
+                vagaService.delete(reparticao.getVagas());
+                repar = service.findById(id);
+                reparticao = repar.get();
+            }
             service.delete(reparticao);
             return ResponseEntity.ok().body(reparticao);
         }

@@ -23,7 +23,8 @@ public class Prateleira implements Serializable {
     @Column(name = "id_prateleira")
     private Long idPrateleira;
     private String nome;
-
+    private int quantidadeReparticoes;
+    private int quantidadeVagas;
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_local")
     private Local local;
@@ -37,6 +38,14 @@ public class Prateleira implements Serializable {
         this.local = local;
     }
 
+    public Prateleira(Long idPrateleira, String nome, int quantidadeReparticoes, int quantidadeVagas, Local local) {
+        this.idPrateleira = idPrateleira;
+        this.nome = nome;
+        this.quantidadeReparticoes = quantidadeReparticoes;
+        this.quantidadeVagas = quantidadeVagas;
+        this.local = local;
+    }
+     
     public Prateleira(){}
 
     public Long getIdPrateleira() {
@@ -69,6 +78,22 @@ public class Prateleira implements Serializable {
 
     public void setReparticoes(List<Reparticao> reparticoes) {
         this.reparticoes = reparticoes;
+    }
+
+    public int getQuantidadeReparticoes() {
+        return quantidadeReparticoes;
+    }
+
+    public void setQuantidadeReparticoes(int quantidadeReparticoes) {
+        this.quantidadeReparticoes = quantidadeReparticoes;
+    }
+
+    public int getQuantidadeVagas() {
+        return quantidadeVagas;
+    }
+
+    public void setQuantidadeVagas(int quantidadeVagas) {
+        this.quantidadeVagas = quantidadeVagas;
     }
 
     @Override

@@ -20,20 +20,23 @@ public class Reparticao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reparticao")
     private Long idReparticao;
-    private int quantidadeVagas;
-
+    private int nivel;
     @ManyToOne
     private Prateleira prateleira;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "reparticao")
     private List<Vaga> vagas;
 
     public Reparticao() {}
 
-    public Reparticao(Long idReparticao, int quantidadeVagas, Prateleira prateleira) {
-        this.idReparticao = idReparticao;
-        this.quantidadeVagas = quantidadeVagas;
+    public Reparticao(Prateleira prateleira, int nivel){
         this.prateleira = prateleira;
+        this.nivel = nivel;
+    }
+
+    public Reparticao(Long idReparticao, Prateleira prateleira, int nivel) {
+        this.idReparticao = idReparticao;
+        this.prateleira = prateleira;
+        this.nivel = nivel;
     }
 
     public Long getIdReparticao() {
@@ -42,14 +45,6 @@ public class Reparticao implements Serializable {
 
     public void setIdReparticao(Long idReparticao) {
         this.idReparticao = idReparticao;
-    }
-
-    public int getQuantidadeVagas() {
-        return quantidadeVagas;
-    }
-
-    public void setQuantidadeVagas(int quantidadeVagas) {
-        this.quantidadeVagas = quantidadeVagas;
     }
 
     public Long getIdPrateleira() {
@@ -66,6 +61,14 @@ public class Reparticao implements Serializable {
 
     public void setVagas(List<Vaga> vagas) {
         this.vagas = vagas;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
 
     @Override
